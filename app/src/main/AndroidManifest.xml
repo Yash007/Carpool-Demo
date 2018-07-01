@@ -20,9 +20,19 @@
             android:name=".DriverLoginActivity"
             android:label="@string/driver"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".RiderLoginActivity"
+        <activity
+            android:name=".RiderLoginActivity"
             android:label="@string/rider"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".MainActivity" />
+
+        <activity android:name=".DriverSignUpActivity"
+            android:label="@string/driverSignUp"
+            android:parentActivityName=".DriverLoginActivity"
+            />
+
+        <activity android:name=".RiderSignUpActivity"
+            android:label="@string/riderSignUp"
+            android:parentActivityName=".RiderLoginActivity"
             />
     </application>
 

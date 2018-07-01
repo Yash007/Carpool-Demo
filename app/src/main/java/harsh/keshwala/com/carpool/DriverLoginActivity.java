@@ -21,7 +21,7 @@ public class DriverLoginActivity extends AppCompatActivity {
         driverSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(DriverLoginActivity.this, MainActivity.class);
+                Intent intent = new Intent(DriverLoginActivity.this, DriverSignUpActivity.class);
                 startActivity(intent);
             }
         });

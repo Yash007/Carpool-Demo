@@ -8,4 +8,15 @@
     <string name="login">Login Now</string>
 
     <string name="signUpText">Don\'t have an account? Register now!</string>
+    <string name="driverSignUp">Driver Signup</string>
+    <string name="riderSignUp">Rider Signup</string>
+
+    <string name="firstName">First Name</string>
+    <string name="lastName">Last Name</string>
+    <string name="email">Email</string>
+    <string name="phone">Phone</string>
+    <string name="confirmPassword">Confirm Password</string>
+    <string name="licenseNumber">License Number</string>
+    <string name="dob">Date Of Birth</string>
+
 </resources>
