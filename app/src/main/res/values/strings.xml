@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Carpool</string>
+    <string name="driver">Driver</string>
+    <string name="rider">Rider</string>
+    <string name="driverEmail">Driver Email</string>
+    <string name="riderEmail">Rider Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login Now</string>
+
+    <string name="signUpText">Don\'t have an account? Register now!</string>
 </resources>
