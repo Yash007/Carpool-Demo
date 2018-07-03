@@ -4,9 +4,8 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -16,7 +15,6 @@ import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -194,7 +192,7 @@ public class DriverLoginActivity extends AppCompatActivity {
 
             if(status.equals("Ok") == true) {
                 Toast.makeText(getApplicationContext(),"Login Successful",Toast.LENGTH_LONG).show();
-                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                startActivity(new Intent(getApplicationContext(),DriverHomeActivity.class));
             }
             else    {
                 Toast.makeText(getApplicationContext(),"Incorrect username or password",Toast.LENGTH_LONG).show();
