@@ -7,6 +7,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/colorPrimary"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context=".DriverCreateTrip">
 
     <TableLayout
@@ -95,6 +97,8 @@
                 android:layout_weight="10"
                 android:hint="@string/date"
                 android:maxLength="50"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 />
         </TableRow>
 
@@ -109,7 +113,7 @@
                 android:id="@+id/tripTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName"
+                android:inputType="time"
                 android:textColor="@color/colorPrimaryText"
                 android:textSize="16sp"
                 android:background="@drawable/edit_text_design"
@@ -117,6 +121,8 @@
                 android:layout_weight="10"
                 android:hint="@string/time"
                 android:maxLength="50"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 />
         </TableRow>
 
@@ -131,14 +137,16 @@
                 android:id="@+id/tripExpense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName"
+                android:inputType="numberDecimal"
                 android:textColor="@color/colorPrimaryText"
                 android:textSize="16sp"
                 android:background="@drawable/edit_text_design"
                 android:padding="10dp"
                 android:layout_weight="10"
                 android:hint="@string/expense"
-                android:maxLength="50"
+                android:maxLength="6"
+                android:nextFocusUp="@id/tripExpense"
+                android:nextFocusLeft="@id/tripExpense"
                 />
         </TableRow>
 

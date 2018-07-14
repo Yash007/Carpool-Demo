@@ -1,12 +1,19 @@
 package harsh.keshwala.com.carpool;
 
+import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -16,6 +23,22 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Iterator;
+import java.util.Locale;
+
 public class DriverCreateTrip extends AppCompatActivity {
 
     private static final int REQUEST_CODE_AUTOCOMPLETE = 1;
@@ -24,14 +47,20 @@ public class DriverCreateTrip extends AppCompatActivity {
     private EditText tripDate;
     private EditText tripTime;
     private EditText tripExpense;
+    private ProgressDialog pDialog;
 
     private Button createTrip;
     private String TAG = "GOOGLE - ";
 
+    private Calendar myCalendar;
+    private DatePickerDialog.OnDateSetListener date;
+    SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver_create_trip);
+
+        myCalendar = Calendar.getInstance();
 
         tripSource = (EditText) findViewById(R.id.tripSource);
         tripDestination = (EditText) findViewById(R.id.tripDestination);
@@ -41,12 +70,7 @@ public class DriverCreateTrip extends AppCompatActivity {
 
         createTrip = (Button) findViewById(R.id.tripCreateButton);
 
-        createTrip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-            }
-        });
 
         tripSource.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +85,77 @@ public class DriverCreateTrip extends AppCompatActivity {
                 openAutocompleteActivity(2);
             }
         });
+
+        date = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateLabel();
+            }
+        };
+
+        tripDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new DatePickerDialog(DriverCreateTrip.this, date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+
+            }
+        });
+
+        tripTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar mcurrentTime = Calendar.getInstance();
+                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+                int minute = mcurrentTime.get(Calendar.MINUTE);
+                TimePickerDialog mTimePicker = new TimePickerDialog(DriverCreateTrip.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                        String hour = String.valueOf(selectedHour);
+                        if(hour.length() == 1)  {
+                            hour = "0"+hour;
+                        }
+
+                       String minute = String.valueOf(selectedMinute);
+                        if(minute.length() == 1)  {
+                            minute = "0"+minute;
+                        }
+                        tripTime.setText( hour + ":" + minute);
+                    }
+                }, hour, minute, true);
+                mTimePicker.setTitle("Select Time");
+                mTimePicker.show();
+            }
+        });
+        sharedPreferences = getSharedPreferences(Config.PREF_NAME,MODE_PRIVATE);
+        final String id = sharedPreferences.getString("dId","");
+
+
+        createTrip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                new CreateTrip(id, tripSource.getText().toString(),
+                                tripDestination.getText().toString(),
+                        tripDate.getText().toString(),
+                        tripTime.getText().toString(),
+                        tripExpense.getText().toString()).execute();
+            }
+        });
     }
+
+    private void updateLabel() {
+        String myFormat = "yyyy/MM/dd"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+        tripDate.setText(sdf.format(myCalendar.getTime()));
+    }
+
+
 
     private void openAutocompleteActivity(int part) {
         try {
@@ -119,5 +213,145 @@ public class DriverCreateTrip extends AppCompatActivity {
 
             }
         }
+    }
+
+    //login with Credentials
+    public class CreateTrip extends AsyncTask<String, Void, String> {
+
+
+        String dId, source, destination, date, time, expense;
+        public CreateTrip(String dId, String source, String destination,
+                            String date, String time, String expense)   {
+            this.dId = dId;
+            this.source = source;
+            this.destination = destination;
+            this.date = date;
+            this.time = time;
+            this.expense = expense;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(DriverCreateTrip.this);
+            pDialog.setMessage("Please wait...");
+            pDialog.setCancelable(false);
+            pDialog.show();
+        }
+
+        protected String doInBackground(String... arg0) {
+
+            try {
+
+                String data = "dId="+dId + "&source=" + source + "&destination="+ destination + "&date=" + date
+                        +"&time=" + time + "&expense=" + expense;
+
+                URL url = new URL(Config.URL+"UserClass.php?driverCreateTrip=true&"+data);
+                Log.d("YYYYYYY",url.toString());
+                JSONObject postDataParams = new JSONObject();
+                Log.e("params",postDataParams.toString());
+
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setReadTimeout(30000 /* milliseconds */);
+                conn.setConnectTimeout(30000 /* milliseconds */);
+                conn.setRequestMethod("GET");
+                conn.setDoInput(true);
+                conn.setDoOutput(true);
+
+                OutputStream os = conn.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(
+                        new OutputStreamWriter(os, "UTF-8"));
+                writer.write(getPostDataString(postDataParams));
+
+                writer.flush();
+                writer.close();
+                os.close();
+
+                int responseCode=conn.getResponseCode();
+
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+
+                    BufferedReader in=new BufferedReader(new
+                            InputStreamReader(
+                            conn.getInputStream()));
+
+                    StringBuffer sb = new StringBuffer("");
+                    String line="";
+
+                    while((line = in.readLine()) != null) {
+
+                        Log.e("+++++", "line: "+line);
+                        sb.append(line);
+                        //break;
+                    }
+
+                    in.close();
+                    return sb.toString();
+
+                }
+                else {
+                    return new String("false : "+responseCode);
+                }
+            }
+            catch(Exception e) {
+                Log.e("~~~", e.toString());
+                return new String("Exception: " + e.getMessage());
+            }
+
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            Log.d("TAG-------",result);
+            String status = null;
+            String message = null;
+
+            try {
+                JSONObject jsonObject = new JSONObject(result);
+                status = jsonObject.getString("status");
+                message = jsonObject.getString("message");
+
+                //JSONObject profile = jsonObject.
+
+                Log.d("LOGIN_RESULT",message);
+
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+            pDialog.dismiss();
+
+            if(status.equals("Ok") == true) {
+                Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG).show();
+                startActivity(new Intent(getApplicationContext(),DriverHomeActivity.class));
+            }
+            else    {
+                Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG).show();
+            }
+
+
+        }
+    }
+
+    public String getPostDataString(JSONObject params) throws Exception {
+        StringBuilder result = new StringBuilder();
+        boolean first = true;
+        Iterator<String> itr = params.keys();
+        while(itr.hasNext()){
+
+            String key = itr.next();
+            Object value = params.get(key);
+
+            if (first)
+                first = false;
+            else
+                result.append("&");
+
+            Log.d("TAG",result.toString());
+            result.append(URLEncoder.encode(key, "UTF-8"));
+            result.append("=");
+            result.append(URLEncoder.encode(value.toString(), "UTF-8"));
+        }
+        return result.toString();
     }
 }

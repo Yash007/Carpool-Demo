@@ -22,9 +22,9 @@ public class DriverHomeActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
 
-        tabLayout.addTab(tabLayout.newTab().setText("Home"));
-        tabLayout.addTab(tabLayout.newTab().setText("Past Trips"));
-        tabLayout.addTab(tabLayout.newTab().setText("Requests"));
+        tabLayout.addTab(tabLayout.newTab().setText("Home").setIcon(R.drawable.home));
+        tabLayout.addTab(tabLayout.newTab().setText("Trips").setIcon(R.drawable.trip));
+        tabLayout.addTab(tabLayout.newTab().setText("Requests").setIcon(R.drawable.requests));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -47,11 +47,7 @@ public class DriverHomeActivity extends AppCompatActivity {
            public void onTabReselected(TabLayout.Tab tab) {
 
            }
-
        });
-
-
-
     }
 
     @Override
@@ -72,6 +68,7 @@ public class DriverHomeActivity extends AppCompatActivity {
             case R.id.viewDriverProfile:
                 break;
             case R.id.signOut:
+                startActivity(new Intent(this, DriverLoginActivity.class));
                 break;
         }
         return super.onOptionsItemSelected(item);

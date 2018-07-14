@@ -184,6 +184,8 @@ public class DriverLoginActivity extends AppCompatActivity {
                 editor.putString("dLicenseNumber",licenseNumber);
                 editor.putString("dRatings",ratings);
                 editor.apply();
+
+
             }
             catch (JSONException e) {
                 e.printStackTrace();

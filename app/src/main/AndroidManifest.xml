@@ -44,6 +44,7 @@
             />
         <activity android:name=".DriverCreateTrip"
             android:label="@string/addTrip"
+            android:windowSoftInputMode="stateHidden"
             android:parentActivityName=".DriverHomeActivity"
             />
     </application>
