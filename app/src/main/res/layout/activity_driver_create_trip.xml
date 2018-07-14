@@ -47,6 +47,8 @@
                 android:layout_weight="10"
                 android:hint="@string/source"
                 android:maxLength="50"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 />
         </TableRow>
 
@@ -69,6 +71,8 @@
                 android:layout_weight="10"
                 android:hint="@string/destination"
                 android:maxLength="50"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 />
         </TableRow>
 
