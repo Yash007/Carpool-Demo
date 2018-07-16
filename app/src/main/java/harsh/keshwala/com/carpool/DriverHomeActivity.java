@@ -22,8 +22,8 @@ public class DriverHomeActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
 
-        tabLayout.addTab(tabLayout.newTab().setText("Home").setIcon(R.drawable.home));
-        tabLayout.addTab(tabLayout.newTab().setText("Trips").setIcon(R.drawable.trip));
+        tabLayout.addTab(tabLayout.newTab().setText("Trips").setIcon(R.drawable.home));
+        tabLayout.addTab(tabLayout.newTab().setText("Past Trips").setIcon(R.drawable.trip));
         tabLayout.addTab(tabLayout.newTab().setText("Requests").setIcon(R.drawable.requests));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 

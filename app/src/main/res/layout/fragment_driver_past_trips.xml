@@ -3,11 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DriverPastTripsFragment">
+    tools:context=".DriverPastTripsFragment"
+    android:background="@color/colorText"
+    >
 
-    <TextView
+    <ListView
+        android:id="@+id/tripPastList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:elevation="3dp"
+        android:dividerHeight="5dp"/>
 
 </RelativeLayout>

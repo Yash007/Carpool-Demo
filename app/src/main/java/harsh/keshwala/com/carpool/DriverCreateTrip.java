@@ -217,8 +217,6 @@ public class DriverCreateTrip extends AppCompatActivity {
 
     //login with Credentials
     public class CreateTrip extends AsyncTask<String, Void, String> {
-
-
         String dId, source, destination, date, time, expense;
         public CreateTrip(String dId, String source, String destination,
                             String date, String time, String expense)   {
@@ -240,9 +238,7 @@ public class DriverCreateTrip extends AppCompatActivity {
         }
 
         protected String doInBackground(String... arg0) {
-
             try {
-
                 String data = "dId="+dId + "&source=" + source + "&destination="+ destination + "&date=" + date
                         +"&time=" + time + "&expense=" + expense;
 
@@ -268,26 +264,19 @@ public class DriverCreateTrip extends AppCompatActivity {
                 os.close();
 
                 int responseCode=conn.getResponseCode();
-
                 if (responseCode == HttpURLConnection.HTTP_OK) {
-
                     BufferedReader in=new BufferedReader(new
                             InputStreamReader(
                             conn.getInputStream()));
-
                     StringBuffer sb = new StringBuffer("");
                     String line="";
-
                     while((line = in.readLine()) != null) {
-
                         Log.e("+++++", "line: "+line);
                         sb.append(line);
                         //break;
                     }
-
                     in.close();
                     return sb.toString();
-
                 }
                 else {
                     return new String("false : "+responseCode);
@@ -297,7 +286,6 @@ public class DriverCreateTrip extends AppCompatActivity {
                 Log.e("~~~", e.toString());
                 return new String("Exception: " + e.getMessage());
             }
-
         }
 
         @Override
@@ -305,22 +293,17 @@ public class DriverCreateTrip extends AppCompatActivity {
             Log.d("TAG-------",result);
             String status = null;
             String message = null;
-
             try {
                 JSONObject jsonObject = new JSONObject(result);
                 status = jsonObject.getString("status");
                 message = jsonObject.getString("message");
-
                 //JSONObject profile = jsonObject.
-
                 Log.d("LOGIN_RESULT",message);
-
             }
             catch (JSONException e) {
                 e.printStackTrace();
             }
             pDialog.dismiss();
-
             if(status.equals("Ok") == true) {
                 Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG).show();
                 startActivity(new Intent(getApplicationContext(),DriverHomeActivity.class));
@@ -328,8 +311,6 @@ public class DriverCreateTrip extends AppCompatActivity {
             else    {
                 Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG).show();
             }
-
-
         }
     }
 
@@ -338,15 +319,12 @@ public class DriverCreateTrip extends AppCompatActivity {
         boolean first = true;
         Iterator<String> itr = params.keys();
         while(itr.hasNext()){
-
             String key = itr.next();
             Object value = params.get(key);
-
             if (first)
                 first = false;
             else
                 result.append("&");
-
             Log.d("TAG",result.toString());
             result.append(URLEncoder.encode(key, "UTF-8"));
             result.append("=");
