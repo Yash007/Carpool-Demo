@@ -25,6 +25,7 @@ public class DriverHomeActivity extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText("Trips").setIcon(R.drawable.home));
         tabLayout.addTab(tabLayout.newTab().setText("Past Trips").setIcon(R.drawable.trip));
         tabLayout.addTab(tabLayout.newTab().setText("Requests").setIcon(R.drawable.requests));
+        tabLayout.addTab(tabLayout.newTab().setText("Vehicles").setIcon(R.drawable.cars));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -66,6 +67,7 @@ public class DriverHomeActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.viewDriverProfile:
+                startActivity(new Intent(this, DriverAccountProfileActivity.class));
                 break;
             case R.id.signOut:
                 startActivity(new Intent(this, DriverLoginActivity.class));

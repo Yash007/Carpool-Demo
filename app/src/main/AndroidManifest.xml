@@ -15,6 +15,7 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAbNFIGMVs9FNmM3mMSL0yLi0hi-icIDJQ" />
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,15 +39,20 @@
             android:name=".RiderSignUpActivity"
             android:label="@string/riderSignUp"
             android:parentActivityName=".RiderLoginActivity" />
-
-        <activity android:name=".DriverHomeActivity"
-            android:label="@string/trips"
-            />
-        <activity android:name=".DriverCreateTrip"
+        <activity
+            android:name=".DriverHomeActivity"
+            android:label="@string/trips" />
+        <activity
+            android:name=".DriverCreateTrip"
             android:label="@string/addTrip"
-            android:windowSoftInputMode="stateHidden"
             android:parentActivityName=".DriverHomeActivity"
-            />
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".DriverAccountProfileActivity"
+            android:label="@string/driverProfile"
+            android:parentActivityName=".DriverHomeActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".DriverAddCarActivity"></activity>
     </application>
 
 </manifest>

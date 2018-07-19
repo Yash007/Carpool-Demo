@@ -26,6 +26,9 @@ public class TabPageAdapter extends FragmentStatePagerAdapter {
             case 2:
                 DriverRequestsFragment driverRequestsFragment = new DriverRequestsFragment();
                 return driverRequestsFragment;
+            case 3:
+                DriverCarFragment driverCarFragment = new DriverCarFragment();
+                return  driverCarFragment;
             default:
                 return null;
         }
