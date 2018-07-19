@@ -37,6 +37,8 @@
     <string name="modelName">Model Name</string>
     <string name="modelYear">Model Year</string>
     <string name="vehicleNumber">Vehicle Number</string>
+    <string name="deleteCar">Delete Vehicle</string>
+    <string name="cancelTrip">Cancel Trip</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
