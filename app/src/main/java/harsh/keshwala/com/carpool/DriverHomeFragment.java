@@ -85,6 +85,16 @@ public class DriverHomeFragment extends android.support.v4.app.Fragment {
 
         loadTrips();
         registerForContextMenu(lv);
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                TextView id = (TextView) view.findViewById(R.id.tId);
+                Intent intent = new Intent(context,DriverTripDetailsActivity.class);
+                intent.putExtra("tId",id.getText().toString());
+                context.startActivity(intent);
+            }
+        });
     }
 
     public void loadTrips() {
@@ -108,9 +118,21 @@ public class DriverHomeFragment extends android.support.v4.app.Fragment {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
         switch (item.getItemId())   {
-            case R.id.cancelTrip:
+            case R.id.viewTrip:
+                TextView bId = info.targetView.findViewById(R.id.tId);
+                Intent intent = new Intent(context, DriverTripDetailsActivity.class);
+                intent.putExtra("tId",bId.getText().toString());
+                context.startActivity(intent);
+                return true;
+            case R.id.editTrip:
                 TextView tId = info.targetView.findViewById(R.id.tId);
-                new CancelTrip(tId.getText().toString().trim(),dId).execute();
+                Intent intent1 = new Intent(context, DriverEditTripActivity.class);
+                intent1.putExtra("tId",tId.getText().toString());
+                context.startActivity(intent1);
+                return  true;
+            case R.id.cancelTrip:
+                TextView cId = info.targetView.findViewById(R.id.tId);
+                new CancelTrip(cId.getText().toString().trim(),dId).execute();
                 return true;
             default:
                 return super.onContextItemSelected(item);

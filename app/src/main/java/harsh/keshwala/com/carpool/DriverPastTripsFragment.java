@@ -94,6 +94,12 @@ public class DriverPastTripsFragment extends android.support.v4.app.Fragment {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
         switch (item.getItemId())   {
+            case R.id.viewTrip:
+
+                return true;
+            case R.id.editTrip:
+
+                return true;
             case R.id.cancelTrip:
                 TextView tId = info.targetView.findViewById(R.id.tId);
                 new CancelTrip(tId.getText().toString().trim(),dId).execute();

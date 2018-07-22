@@ -39,6 +39,19 @@
     <string name="vehicleNumber">Vehicle Number</string>
     <string name="deleteCar">Delete Vehicle</string>
     <string name="cancelTrip">Cancel Trip</string>
+    <string name="viewTrip">View</string>
+    <string name="vehicle">Vehicle</string>
+    <string name="tripDetails">Trip Details</string>
+    <string name="driverDetails">Driver\'s Details</string>
+    <string name="name">Name</string>
+    <string name="carDetails">Car Details</string>
+    <string name="carModel">Car Model</string>
+    <string name="carNumber">Car Number</string>
+    <string name="carYear">Car Year</string>
+    <string name="riderDetails">Rider\'s Details</string>
+    <string name="riderName">Rider Name</string>
+    <string name="addCar">Add Car</string>
+    <string name="editTrip">Edit Trip</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
