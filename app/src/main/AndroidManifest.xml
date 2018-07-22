@@ -52,20 +52,21 @@
             android:label="@string/driverProfile"
             android:parentActivityName=".DriverHomeActivity"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".DriverAddCarActivity"
+        <activity
+            android:name=".DriverAddCarActivity"
             android:label="@string/addCar"
             android:parentActivityName=".DriverHomeActivity"
-            android:windowSoftInputMode="stateHidden"
-            />
-
-        <activity android:name=".DriverEditTripActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".DriverEditTripActivity"
             android:label="@string/editTrip"
-            android:parentActivityName=".DriverHomeActivity"
-            />
-        <activity android:name=".DriverTripDetailsActivity"
+            android:parentActivityName=".DriverHomeActivity" />
+        <activity
+            android:name=".DriverTripDetailsActivity"
             android:label="@string/tripDetails"
-            android:parentActivityName=".DriverHomeActivity"
-            ></activity>
+            android:parentActivityName=".DriverHomeActivity" />
+        <activity android:name=".RiderHomeActivity" />
+        <activity android:name=".RiderAccountProfileActivity"></activity>
     </application>
 
 </manifest>

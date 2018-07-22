@@ -52,6 +52,7 @@
     <string name="riderName">Rider Name</string>
     <string name="addCar">Add Car</string>
     <string name="editTrip">Edit Trip</string>
+    <string name="riderProfile">Rider Profile</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

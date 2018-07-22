@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="60dp"
     android:orientation="horizontal"
-    android:divider="@color/colorDivider"
-    android:dividerPadding="10dp"
+    android:background="@color/colorText"
     android:weightSum="10"
     >
     <TableLayout

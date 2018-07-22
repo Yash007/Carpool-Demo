@@ -19,7 +19,6 @@ public class DriverHomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver_home);
 
-
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
 
         tabLayout.addTab(tabLayout.newTab().setText("Trips").setIcon(R.drawable.home));
