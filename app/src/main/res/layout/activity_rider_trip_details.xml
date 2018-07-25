@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DriverTripDetailsActivity"
+    tools:context=".RiderTripDetailsActivity"
     android:background="@color/colorText"
     android:orientation="vertical"
     android:layout_gravity="center_horizontal|center_vertical"
@@ -656,7 +656,31 @@
                 android:drawableStart="@drawable/phone"
                 android:drawablePadding="5dp"
                 />
+            <TextView
+                android:id="@+id/tdDriverId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                />
+        </TableRow>
 
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="10"
+            android:background="@drawable/divider_table"
+            android:gravity="center_horizontal"
+            android:padding="3dp"
+            >
+
+            <Button
+                android:id="@+id/sendRequestButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_design"
+                android:text="@string/sendRequest"
+                android:padding="10dp"
+                />
         </TableRow>
     </TableLayout>
 </ScrollView>

@@ -54,6 +54,7 @@
     <string name="editTrip">Edit Trip</string>
     <string name="riderProfile">Rider Profile</string>
     <string name="browseRides">Browse Rides</string>
+    <string name="sendRequest">Send Request</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

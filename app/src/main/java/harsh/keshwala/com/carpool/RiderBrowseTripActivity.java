@@ -7,11 +7,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -52,7 +54,6 @@ public class RiderBrowseTripActivity extends AppCompatActivity {
         tripList = new ArrayList<>();
         lv = (ListView) findViewById(R.id.riderBrowseTripList);
 
-
         search = (ImageButton) findViewById(R.id.tripSearchImageButton);
 
         search.setOnClickListener(new View.OnClickListener() {
@@ -74,6 +75,16 @@ public class RiderBrowseTripActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 openAutocompleteActivity(2);
+            }
+        });
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                TextView id = (TextView) view.findViewById(R.id.tId);
+                Intent intent = new Intent(RiderBrowseTripActivity.this,RiderTripDetailsActivity.class);
+                intent.putExtra("tId",id.getText().toString());
+                startActivity(intent);
             }
         });
     }

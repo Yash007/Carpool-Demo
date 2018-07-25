@@ -67,11 +67,12 @@
             android:parentActivityName=".DriverHomeActivity" />
         <activity android:name=".RiderHomeActivity" />
         <activity android:name=".RiderAccountProfileActivity" />
-        <activity android:name=".RiderBrowseTripActivity"
+        <activity
+            android:name=".RiderBrowseTripActivity"
             android:label="@string/browseRides"
             android:parentActivityName=".RiderHomeActivity"
-            android:windowSoftInputMode="stateHidden"
-            ></activity>
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".RiderTripDetailsActivity"></activity>
     </application>
 
 </manifest>

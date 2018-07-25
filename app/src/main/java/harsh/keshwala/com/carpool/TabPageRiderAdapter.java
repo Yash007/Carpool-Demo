@@ -20,9 +20,6 @@ public class TabPageRiderAdapter extends FragmentStatePagerAdapter {
                 RiderHomeFragment riderHomeFragment = new RiderHomeFragment();
                 return riderHomeFragment;
             case 1:
-                RiderBrowseTripFragment riderBrowseTripFragment = new RiderBrowseTripFragment();
-                return riderBrowseTripFragment;
-            case 2:
                 RiderPastTripFragment riderPastTripFragment = new RiderPastTripFragment();
                 return riderPastTripFragment;
             default:

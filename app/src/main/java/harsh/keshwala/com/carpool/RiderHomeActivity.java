@@ -19,7 +19,6 @@ public class RiderHomeActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs1);
 
         tabLayout.addTab(tabLayout.newTab().setText("Home").setIcon(R.drawable.home));
-        tabLayout.addTab(tabLayout.newTab().setText("Browse").setIcon(R.drawable.browse));
         tabLayout.addTab(tabLayout.newTab().setText("Past Trips").setIcon(R.drawable.trip));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
