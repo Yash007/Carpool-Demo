@@ -16,7 +16,6 @@ public class RiderHomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rider_home);
-
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs1);
 
         tabLayout.addTab(tabLayout.newTab().setText("Home").setIcon(R.drawable.home));
