@@ -5,10 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity"
-    android:gravity="center_vertical|center_horizontal"
     android:background="@color/colorPrimary"
-    >
+    android:gravity="center_vertical|center_horizontal"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    tools:context=".AdminLoginActivity">
 
     <TableLayout
         android:layout_width="match_parent"
@@ -25,73 +26,68 @@
             android:gravity="center_horizontal"
             >
 
-            <ImageView
-                android:layout_width="wrap_content"
+            <EditText
+                android:id="@+id/adminId"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/logo"
+                android:inputType="textEmailAddress"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="16sp"
+                android:background="@drawable/edit_text_design"
+                android:padding="10dp"
+                android:text="admin"
+                android:layout_weight="10"
+                android:hint="@string/riderEmail"
+                android:maxLength="50"
                 />
 
         </TableRow>
+
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:layout_margin="10dp"
             android:weightSum="10"
+            android:gravity="center_horizontal"
+            >
+
+            <EditText
+                android:id="@+id/adminPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="16sp"
+                android:background="@drawable/edit_text_design"
+                android:padding="10dp"
+                android:layout_weight="10"
+                android:hint="@string/password"
+                android:text="admin"
+                android:maxLength="50"
+                />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_margin="10dp"
+            android:weightSum="10"
+            android:gravity="center_horizontal"
             >
 
             <Button
-                android:id="@+id/driverButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/button_design"
-                android:text="@string/driver"
-                android:textColor="@color/colorText"
-                android:layout_weight="10"
-                android:textSize="24sp"
-                android:padding="16dp"
-                android:elevation="10dp"
-                />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:layout_margin="10dp"
-            android:weightSum="10"
-            >
-
-            <Button
-                android:id="@+id/riderButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/button_design"
-                android:textColor="@color/colorText"
-                android:text="@string/rider"
-                android:layout_weight="10"
-                android:textSize="24sp"
-                android:padding="16dp"
-                android:elevation="10dp"
-                />
-        </TableRow>
-
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:layout_margin="10dp"
-            android:weightSum="10"
-            android:gravity="center_vertical|center_horizontal"
-            >
-            <TextView
-                android:id="@+id/adminLogin"
+                android:id="@+id/riderLoginButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/admin"
-                android:textSize="12sp"
+                android:background="@drawable/button_design"
                 android:textColor="@color/colorText"
+                android:text="@string/login"
+                android:textSize="16sp"
+                android:padding="10dp"
+                android:elevation="10dp"
                 />
         </TableRow>
     </TableLayout>

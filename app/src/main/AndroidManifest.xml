@@ -73,7 +73,9 @@
             android:parentActivityName=".RiderHomeActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".RiderTripDetailsActivity" />
-        <activity android:name=".DriverRequestDetailsActivity"></activity>
+        <activity android:name=".DriverRequestDetailsActivity" />
+        <activity android:name=".AdminLoginActivity" />
+        <activity android:name=".AdminHomeActivity"></activity>
     </application>
 
 </manifest>
