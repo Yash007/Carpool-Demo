@@ -72,7 +72,8 @@
             android:label="@string/browseRides"
             android:parentActivityName=".RiderHomeActivity"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".RiderTripDetailsActivity"></activity>
+        <activity android:name=".RiderTripDetailsActivity" />
+        <activity android:name=".DriverRequestDetailsActivity"></activity>
     </application>
 
 </manifest>
