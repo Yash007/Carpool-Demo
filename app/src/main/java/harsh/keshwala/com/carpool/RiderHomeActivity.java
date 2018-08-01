@@ -20,6 +20,7 @@ public class RiderHomeActivity extends AppCompatActivity {
 
         tabLayout.addTab(tabLayout.newTab().setText("Home").setIcon(R.drawable.home));
         tabLayout.addTab(tabLayout.newTab().setText("Past Trips").setIcon(R.drawable.trip));
+        tabLayout.addTab(tabLayout.newTab().setText("Support").setIcon(R.drawable.message));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager1);

@@ -22,6 +22,9 @@ public class TabPageRiderAdapter extends FragmentStatePagerAdapter {
             case 1:
                 RiderPastTripFragment riderPastTripFragment = new RiderPastTripFragment();
                 return riderPastTripFragment;
+            case 2:
+                RiderSupportFragment riderSupportFragment = new RiderSupportFragment();
+                return  riderSupportFragment;
             default:
                 return null;
         }

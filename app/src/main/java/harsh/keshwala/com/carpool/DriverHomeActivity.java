@@ -25,6 +25,7 @@ public class DriverHomeActivity extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText("Past Trips").setIcon(R.drawable.trip));
         tabLayout.addTab(tabLayout.newTab().setText("Requests").setIcon(R.drawable.requests));
         tabLayout.addTab(tabLayout.newTab().setText("Vehicles").setIcon(R.drawable.cars));
+        tabLayout.addTab(tabLayout.newTab().setText("Support").setIcon(R.drawable.message));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
