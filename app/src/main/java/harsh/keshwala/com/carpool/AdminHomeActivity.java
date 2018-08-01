@@ -16,6 +16,7 @@ public class AdminHomeActivity extends AppCompatActivity {
 
         tabLayout.addTab(tabLayout.newTab().setText("Drivers").setIcon(R.drawable.cars));
         tabLayout.addTab(tabLayout.newTab().setText("Riders").setIcon(R.drawable.users));
+        tabLayout.addTab(tabLayout.newTab().setText("Support").setIcon(R.drawable.message));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager2);

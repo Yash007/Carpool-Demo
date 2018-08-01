@@ -21,6 +21,9 @@ public class TabAdminAdapter extends FragmentStatePagerAdapter {
             case 1:
                 AdminRiderFragment adminRiderFragment = new AdminRiderFragment();
                 return adminRiderFragment;
+            case 2:
+                AdminSupportFragment adminSupportFragment = new AdminSupportFragment();
+                return  adminSupportFragment;
             default:
                 return null;
         }

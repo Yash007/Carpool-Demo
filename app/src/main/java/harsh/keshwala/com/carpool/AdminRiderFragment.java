@@ -178,7 +178,7 @@ public class AdminRiderFragment extends android.support.v4.app.Fragment {
              * */
             ListAdapter adapter = new SimpleAdapter(
                     context, tripList,
-                    R.layout.user_list, new String[]{"dId","dName", "dEmail", "dPhone"},
+                    R.layout.user_list, new String[]{"rId","rName", "rEmail", "rPhone"},
                     new int[]{R.id.uId, R.id.uName, R.id.uEmail, R.id.uPhone});
 
             lv.setAdapter(adapter);
