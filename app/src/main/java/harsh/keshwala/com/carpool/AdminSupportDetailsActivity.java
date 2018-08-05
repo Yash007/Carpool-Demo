@@ -1,20 +1,14 @@
 package harsh.keshwala.com.carpool;
 
-import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.Spinner;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,117 +25,57 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Iterator;
 
-public class DriverTripDetailsActivity extends AppCompatActivity {
+public class AdminSupportDetailsActivity extends AppCompatActivity {
 
-    private String tId,dId;
-    private SharedPreferences sharedPreferences;
-    private TextView source, destination, date, time, expense, driverName, driverPhone, driverEmail, carModel, carNumber, carYear;
-    private TextView riderName, riderEmail, riderNumber;
-    private String riderId;
+    private String sId;
+    private TextView title,message,sender;
+    private EditText response;
+    private Button cancel, send;
     private ProgressDialog pDialog;
-    private Menu menu;
-    private MenuItem menu1,menu2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_driver_trip_details);
+        setContentView(R.layout.activity_admin_support_details);
+        sId = getIntent().getExtras().getString("sId","");
 
-        sharedPreferences = getSharedPreferences(Config.PREF_NAME,MODE_PRIVATE);
-        dId = sharedPreferences.getString("dId","");
+        title = (TextView) findViewById(R.id.adminSupportTitle);
+        message = (TextView) findViewById(R.id.adminSupportMessage);
+        sender = (TextView) findViewById(R.id.adminSupportName);
 
-        tId = getIntent().getExtras().getString("tId","");
+        response = (EditText) findViewById(R.id.adminSupportResponse);
+        cancel = (Button) findViewById(R.id.adminSupportCancel);
+        send = (Button) findViewById(R.id.adminSupportSend);
 
-        source = (TextView) findViewById(R.id.tdSource);
-        destination  = (TextView) findViewById(R.id.tdDestination);
-        date  = (TextView) findViewById(R.id.tdDate);
-        time  = (TextView) findViewById(R.id.tdTime);
-        expense  = (TextView) findViewById(R.id.tdExpense);
-        driverName  = (TextView) findViewById(R.id.tdDriverName);
-        driverEmail  = (TextView) findViewById(R.id.tdDriverEmail);
-        driverPhone  = (TextView) findViewById(R.id.tdDriverPhone);
-        carModel  = (TextView) findViewById(R.id.tdCarModel);
-        carNumber  = (TextView) findViewById(R.id.tdCarNumber);
-        carYear  = (TextView) findViewById(R.id.tdCarYear);
-        riderName  = (TextView) findViewById(R.id.tdRiderName);
-        riderEmail  = (TextView) findViewById(R.id.tdRiderEmail);
-        riderNumber  = (TextView) findViewById(R.id.tdRiderPhone);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),AdminHomeActivity.class));
+            }
+        });
 
-        new TripDetails(tId).execute();
-    }
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new SendAdminResponse(sId,response.getText().toString()).execute();
+            }
+        });
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        this.menu = menu;
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.trip_menu,menu);
-        menu1 = this.menu.findItem(R.id.startTrip);
-        menu2 = this.menu.findItem(R.id.completeTrip);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId())   {
-            case R.id.startTrip:
-                item.setVisible(false);
-                menu2.setVisible(true);
-                break;
-            case R.id.completeTrip:
-                item.setVisible(false);
-                //code for dialog
-                final Dialog dialog = new Dialog(this);
-                dialog.setContentView(R.layout.dialog_ratings);
-                final Spinner ratings = dialog.findViewById(R.id.ratings);
-                ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                        R.array.ratings, android.R.layout.simple_spinner_item);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                ratings.setAdapter(adapter);
-
-                Button cancel = (Button) dialog.findViewById(R.id.dialogRatingCancelButton);
-                Button save = (Button) dialog.findViewById(R.id.dialogRatingSaveButton);
-
-                cancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.dismiss();
-                    }
-                });
-
-                save.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if(riderId == null) {
-                            Toast.makeText(getApplicationContext(), "Can not submit rating without rider",Toast.LENGTH_LONG).show();
-                        }
-                        else    {
-                            new SendDriverRating(riderId, ratings.getSelectedItem().toString()).execute();
-                        }
-                    }
-                });
-
-                dialog.getWindow().getAttributes().width = LinearLayout.LayoutParams.MATCH_PARENT;
-                dialog.show();
-                break;
-
-
-        }
-        return super.onOptionsItemSelected(item);
+        new SupportDetails(sId).execute();
     }
 
     //login with Credentials
-    public class TripDetails extends AsyncTask<String, Void, String> {
+    public class SupportDetails extends AsyncTask<String, Void, String> {
 
-        String tId;
-        public TripDetails(String tId) {
-            this.tId = tId;
+        String sId;
+        public SupportDetails(String sId) {
+            this.sId = sId;
         }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pDialog = new ProgressDialog(DriverTripDetailsActivity.this);
+            pDialog = new ProgressDialog(AdminSupportDetailsActivity.this);
             pDialog.setMessage("Please wait...");
             pDialog.setCancelable(false);
             pDialog.show();
@@ -151,7 +85,7 @@ public class DriverTripDetailsActivity extends AppCompatActivity {
 
             try {
 
-                URL url = new URL(Config.URL+"UserClass.php?driverTripDetails=true&tId="+tId);
+                URL url = new URL(Config.URL+"UserClass.php?getSupportDetails=true&sId="+sId);
                 Log.d("YYYYYYY",url.toString());
                 JSONObject postDataParams = new JSONObject();
                 Log.e("params",postDataParams.toString());
@@ -210,41 +144,11 @@ public class DriverTripDetailsActivity extends AppCompatActivity {
             Log.d("TAG-------",result);
             try {
                 JSONObject jsonObject = new JSONObject(result);
-                source.setText(jsonObject.getString("tSource"));
-                destination.setText(jsonObject.getString("tDestination"));
-                date.setText(jsonObject.getString("tDate"));
-                time.setText(jsonObject.getString("tTime"));
-                expense.setText(jsonObject.getString("tExpense") + " CAD");
-                String riderStatus = jsonObject.getString("riderStatus");
-                String temp = "AVAILABLE";
+                title.setText(jsonObject.getString("sTitle"));
+                message.setText(jsonObject.getString("sMessage"));
+                response.setText(jsonObject.getString("sResponse"));
+                sender.setText(jsonObject.getString("sSenderName"));
 
-
-                JSONObject driver = jsonObject.getJSONObject("driver");
-
-                driverName.setText(driver.getString("dFirstName") + " " + driver.getString("dLastName"));
-                driverEmail.setText(driver.getString("dEmail"));
-                driverPhone.setText(driver.getString("dPhone"));
-
-                JSONObject car = jsonObject.getJSONObject("car");
-
-                carNumber.setText(car.getString("cVehicleNumber"));
-                carModel.setText(car.getString("cModelName"));
-                carYear.setText(car.getString("cModelYear"));
-
-                if(riderStatus.equals("AVAILABLE"))    {
-
-                    JSONObject rider = jsonObject.getJSONObject("rider");
-                    riderName.setText(rider.getString("rFirstName") + " " + rider.getString("rLastName"));
-                    riderEmail.setText(rider.getString("rEmail"));
-                    riderNumber.setText(rider.getString("rPhone"));
-                    riderId = rider.getString("rId");
-                }
-                else    {
-                    riderName.setText(riderStatus);
-                    riderEmail.setText(riderStatus);
-                    riderNumber.setText(riderStatus);
-                    riderId = null;
-                }
             }
             catch (JSONException e) {
                 e.printStackTrace();
@@ -275,18 +179,18 @@ public class DriverTripDetailsActivity extends AppCompatActivity {
         return result.toString();
     }
 
-    public class SendDriverRating extends AsyncTask<String, Void, String> {
-        String ratings, rId;
+    public class SendAdminResponse extends AsyncTask<String, Void, String> {
+        String sId, response;
 
-        public SendDriverRating(String rId, String ratings)   {
-            this.ratings = ratings;
-            this.rId = rId;
+        public SendAdminResponse(String sId, String response)   {
+            this.sId = sId;
+            this.response = response;
         }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pDialog = new ProgressDialog(DriverTripDetailsActivity.this);
+            pDialog = new ProgressDialog(AdminSupportDetailsActivity.this);
             pDialog.setMessage("Please wait...");
             pDialog.setCancelable(false);
             pDialog.show();
@@ -294,9 +198,9 @@ public class DriverTripDetailsActivity extends AppCompatActivity {
 
         protected String doInBackground(String... arg0) {
             try {
-                String data = "rId="+rId + "&ratings=" + ratings;
+                String data = "sId="+sId + "&sResponse=" + URLEncoder.encode(response, "UTF-8").toString();
 
-                URL url = new URL(Config.URL+"UserClass.php?driverSubmitRating=true&"+data);
+                URL url = new URL(Config.URL+"UserClass.php?adminSendResponse=true&"+data);
                 Log.d("YYYYYYY",url.toString());
                 JSONObject postDataParams = new JSONObject();
                 Log.e("params",postDataParams.toString());

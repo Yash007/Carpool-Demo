@@ -80,7 +80,7 @@ public class RiderHomeFragment extends android.support.v4.app.Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 TextView id = (TextView) view.findViewById(R.id.tId);
-                Intent intent = new Intent(context,DriverTripDetailsActivity.class);
+                Intent intent = new Intent(context,RiderTripDetailsActivity.class);
                 intent.putExtra("tId",id.getText().toString());
                 context.startActivity(intent);
             }

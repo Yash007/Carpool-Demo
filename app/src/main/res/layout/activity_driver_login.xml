@@ -51,6 +51,7 @@
                 android:padding="10dp"
                 android:layout_weight="10"
                 android:hint="@string/driverEmail"
+                android:text="sompurayash@live.com"
                 android:maxLength="50"
                 />
 
@@ -77,6 +78,7 @@
                 android:layout_weight="10"
                 android:hint="@string/password"
                 android:maxLength="50"
+                android:text="yash007"
                 />
 
         </TableRow>

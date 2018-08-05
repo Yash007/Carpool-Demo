@@ -3,11 +3,13 @@ package harsh.keshwala.com.carpool;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +40,7 @@ public class RiderSupportFragment extends android.support.v4.app.Fragment {
     Activity context;
     SharedPreferences sharedPreferences;
     String rId;
+    private FloatingActionButton addSupport;
     public RiderSupportFragment() {
 
     }
@@ -62,14 +65,25 @@ public class RiderSupportFragment extends android.support.v4.app.Fragment {
 
         rId = sharedPreferences.getString("rId","");
 
+        addSupport = (FloatingActionButton) context.findViewById(R.id.addSupportFloatingActionButton);
+
         loadDrivers();
         registerForContextMenu(lv);
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                TextView id = (TextView) view.findViewById(R.id.uId);
-                // new DeleteRider(id.getText().toString()).execute();
+                TextView id = (TextView) view.findViewById(R.id.sSupportId);
+                Intent intent = new Intent(context, SupportDetailsActivity.class);
+                intent.putExtra("sId",id.getText().toString());
+                context.startActivity(intent);
+            }
+        });
+
+        addSupport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                context.startActivity(new Intent(context, RiderAddSupportActivity.class));
             }
         });
     }

@@ -75,7 +75,11 @@
         <activity android:name=".RiderTripDetailsActivity" />
         <activity android:name=".DriverRequestDetailsActivity" />
         <activity android:name=".AdminLoginActivity" />
-        <activity android:name=".AdminHomeActivity"></activity>
+        <activity android:name=".AdminHomeActivity" />
+        <activity android:name=".RiderAddSupportActivity" />
+        <activity android:name=".DriverAddSupportActivity" />
+        <activity android:name=".AdminSupportDetailsActivity" />
+        <activity android:name=".SupportDetailsActivity"></activity>
     </application>
 
 </manifest>

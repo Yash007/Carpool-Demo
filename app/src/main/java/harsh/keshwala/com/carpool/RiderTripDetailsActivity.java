@@ -1,13 +1,20 @@
 package harsh.keshwala.com.carpool;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +39,9 @@ public class RiderTripDetailsActivity extends AppCompatActivity {
     private TextView riderName, riderEmail, riderNumber, dId;
     private ProgressDialog pDialog;
     private Button sendRequest;
+    private String driverId,riderId;
+    private Menu menu;
+    private MenuItem menu1,menu2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,9 +78,71 @@ public class RiderTripDetailsActivity extends AppCompatActivity {
         sendRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new SendRequest(dId.getText().toString(),rId,tId).execute();
+                new SendRequest(dId.getText().toString(), rId, tId).execute();
             }
         });
+
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        this.menu = menu;
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.trip_menu,menu);
+        menu1 = this.menu.findItem(R.id.startTrip);
+        menu2 = this.menu.findItem(R.id.completeTrip);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId())   {
+            case R.id.startTrip:
+                item.setVisible(false);
+                menu2.setVisible(true);
+                break;
+            case R.id.completeTrip:
+                item.setVisible(false);
+                //code for dialog
+                final Dialog dialog = new Dialog(this);
+                dialog.setContentView(R.layout.dialog_ratings);
+                final Spinner ratings = dialog.findViewById(R.id.ratings);
+                ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                        R.array.ratings, android.R.layout.simple_spinner_item);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                ratings.setAdapter(adapter);
+
+                Button cancel = (Button) dialog.findViewById(R.id.dialogRatingCancelButton);
+                Button save = (Button) dialog.findViewById(R.id.dialogRatingSaveButton);
+
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+
+                save.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if(driverId == null) {
+                            Toast.makeText(getApplicationContext(), "Can not submit rating without rider",Toast.LENGTH_LONG).show();
+                        }
+                        else    {
+                            new SendRiderRating(driverId, ratings.getSelectedItem().toString()).execute();
+                        }
+                    }
+                });
+
+                dialog.getWindow().getAttributes().width = LinearLayout.LayoutParams.MATCH_PARENT;
+                dialog.show();
+                break;
+
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     //login with Credentials
@@ -168,6 +240,7 @@ public class RiderTripDetailsActivity extends AppCompatActivity {
                 driverEmail.setText(driver.getString("dEmail"));
                 driverPhone.setText(driver.getString("dPhone"));
                 dId.setText(driver.getString("dId"));
+                driverId = driver.getString("dId");
 
                 JSONObject car = jsonObject.getJSONObject("car");
 
@@ -181,11 +254,19 @@ public class RiderTripDetailsActivity extends AppCompatActivity {
                     riderName.setText(rider.getString("rFirstName") + " " + rider.getString("rLastName"));
                     riderEmail.setText(rider.getString("rEmail"));
                     riderNumber.setText(rider.getString("rPhone"));
+                    riderId = rider.getString("rId");
                 }
                 else    {
                     riderName.setText(riderStatus);
                     riderEmail.setText(riderStatus);
                     riderNumber.setText(riderStatus);
+                }
+
+                if(rId.equals(riderId) == true) {
+                    sendRequest.setVisibility(View.GONE);
+                }
+                else    {
+                    sendRequest.setVisibility(View.VISIBLE);
                 }
             }
             catch (JSONException e) {
@@ -309,4 +390,97 @@ public class RiderTripDetailsActivity extends AppCompatActivity {
             }
         }
     }
+
+    public class SendRiderRating extends AsyncTask<String, Void, String> {
+        String ratings, dId;
+
+        public SendRiderRating(String dId, String ratings)   {
+            this.ratings = ratings;
+            this.dId = dId;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(RiderTripDetailsActivity.this);
+            pDialog.setMessage("Please wait...");
+            pDialog.setCancelable(false);
+            pDialog.show();
+        }
+
+        protected String doInBackground(String... arg0) {
+            try {
+                String data = "dId="+dId + "&ratings=" + ratings;
+
+                URL url = new URL(Config.URL+"UserClass.php?riderSubmitRating=true&"+data);
+                Log.d("YYYYYYY",url.toString());
+                JSONObject postDataParams = new JSONObject();
+                Log.e("params",postDataParams.toString());
+
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setReadTimeout(30000 /* milliseconds */);
+                conn.setConnectTimeout(30000 /* milliseconds */);
+                conn.setRequestMethod("GET");
+                conn.setDoInput(true);
+                conn.setDoOutput(true);
+
+                OutputStream os = conn.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(
+                        new OutputStreamWriter(os, "UTF-8"));
+                writer.write(getPostDataString(postDataParams));
+
+                writer.flush();
+                writer.close();
+                os.close();
+
+                int responseCode=conn.getResponseCode();
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    BufferedReader in=new BufferedReader(new
+                            InputStreamReader(
+                            conn.getInputStream()));
+                    StringBuffer sb = new StringBuffer("");
+                    String line="";
+                    while((line = in.readLine()) != null) {
+                        Log.e("+++++", "line: "+line);
+                        sb.append(line);
+                        //break;
+                    }
+                    in.close();
+                    return sb.toString();
+                }
+                else {
+                    return new String("false : "+responseCode);
+                }
+            }
+            catch(Exception e) {
+                Log.e("~~~", e.toString());
+                return new String("Exception: " + e.getMessage());
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            Log.d("TAG-------",result);
+            String status = null;
+            String message = null;
+            try {
+                JSONObject jsonObject = new JSONObject(result);
+                status = jsonObject.getString("status");
+                message = jsonObject.getString("message");
+                //JSONObject profile = jsonObject.
+                Log.d("LOGIN_RESULT",message);
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+            pDialog.dismiss();
+            if(status.equals("Ok") == true) {
+                Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG).show();
+            }
+            else    {
+                Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
 }
