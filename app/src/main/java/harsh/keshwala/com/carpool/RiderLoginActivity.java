@@ -170,6 +170,8 @@ public class RiderLoginActivity extends AppCompatActivity {
                 password = profile.getString("rPassword");
                 phone = profile.getString("rPhone");
                 dob = profile.getString("rDob");
+                ratings = profile.getString("rRatings");
+
 
                 SharedPreferences.Editor editor = getSharedPreferences(Config.PREF_NAME, MODE_PRIVATE).edit();
                 editor.putString("rId",id);
@@ -179,6 +181,7 @@ public class RiderLoginActivity extends AppCompatActivity {
                 editor.putString("rPassword",password);
                 editor.putString("rPhone",phone);
                 editor.putString("rDob",dob);
+                editor.putString("rRatings",ratings);
                 editor.apply();
             }
             catch (JSONException e) {

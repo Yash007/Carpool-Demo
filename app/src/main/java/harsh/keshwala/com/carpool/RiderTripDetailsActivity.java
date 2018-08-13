@@ -36,7 +36,7 @@ public class RiderTripDetailsActivity extends AppCompatActivity {
     private String tId,rId;
     private SharedPreferences sharedPreferences;
     private TextView source, destination, date, time, expense, driverName, driverPhone, driverEmail, carModel, carNumber, carYear;
-    private TextView riderName, riderEmail, riderNumber, dId;
+    private TextView riderName, riderEmail, riderNumber, dId, driverRating, riderRating;
     private ProgressDialog pDialog;
     private Button sendRequest;
     private String driverId,riderId;
@@ -69,6 +69,8 @@ public class RiderTripDetailsActivity extends AppCompatActivity {
         riderEmail  = (TextView) findViewById(R.id.tdRiderEmail);
         riderNumber  = (TextView) findViewById(R.id.tdRiderPhone);
         dId = (TextView) findViewById(R.id.tdDriverId);
+        driverRating = (TextView) findViewById(R.id.tdDriverRating);
+        riderRating = (TextView) findViewById(R.id.tdRiderRating);
 
         sendRequest = (Button) findViewById(R.id.sendRequestButton);
 
@@ -239,6 +241,7 @@ public class RiderTripDetailsActivity extends AppCompatActivity {
                 driverName.setText(driver.getString("dFirstName") + " " + driver.getString("dLastName"));
                 driverEmail.setText(driver.getString("dEmail"));
                 driverPhone.setText(driver.getString("dPhone"));
+                driverRating.setText(driver.getString("dRatings"));
                 dId.setText(driver.getString("dId"));
                 driverId = driver.getString("dId");
 
@@ -254,12 +257,14 @@ public class RiderTripDetailsActivity extends AppCompatActivity {
                     riderName.setText(rider.getString("rFirstName") + " " + rider.getString("rLastName"));
                     riderEmail.setText(rider.getString("rEmail"));
                     riderNumber.setText(rider.getString("rPhone"));
+                    riderRating.setText(rider.getString("rRatings"));
                     riderId = rider.getString("rId");
                 }
                 else    {
                     riderName.setText(riderStatus);
                     riderEmail.setText(riderStatus);
                     riderNumber.setText(riderStatus);
+                    riderRating.setText(riderStatus);
                 }
 
                 if(rId.equals(riderId) == true) {

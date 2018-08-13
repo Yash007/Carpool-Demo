@@ -36,7 +36,7 @@ public class DriverTripDetailsActivity extends AppCompatActivity {
     private String tId,dId;
     private SharedPreferences sharedPreferences;
     private TextView source, destination, date, time, expense, driverName, driverPhone, driverEmail, carModel, carNumber, carYear;
-    private TextView riderName, riderEmail, riderNumber;
+    private TextView riderName, riderEmail, riderNumber, driverRating, riderRating;
     private String riderId;
     private ProgressDialog pDialog;
     private Menu menu;
@@ -66,6 +66,8 @@ public class DriverTripDetailsActivity extends AppCompatActivity {
         riderName  = (TextView) findViewById(R.id.tdRiderName);
         riderEmail  = (TextView) findViewById(R.id.tdRiderEmail);
         riderNumber  = (TextView) findViewById(R.id.tdRiderPhone);
+        driverRating = (TextView) findViewById(R.id.tdDriverRating);
+        riderRating = (TextView) findViewById(R.id.tdRiderRating);
 
         new TripDetails(tId).execute();
     }
@@ -224,6 +226,7 @@ public class DriverTripDetailsActivity extends AppCompatActivity {
                 driverName.setText(driver.getString("dFirstName") + " " + driver.getString("dLastName"));
                 driverEmail.setText(driver.getString("dEmail"));
                 driverPhone.setText(driver.getString("dPhone"));
+                driverRating.setText(driver.getString("dRatings"));
 
                 JSONObject car = jsonObject.getJSONObject("car");
 
@@ -237,12 +240,14 @@ public class DriverTripDetailsActivity extends AppCompatActivity {
                     riderName.setText(rider.getString("rFirstName") + " " + rider.getString("rLastName"));
                     riderEmail.setText(rider.getString("rEmail"));
                     riderNumber.setText(rider.getString("rPhone"));
+                    riderRating.setText(rider.getString("rRatings"));
                     riderId = rider.getString("rId");
                 }
                 else    {
                     riderName.setText(riderStatus);
                     riderEmail.setText(riderStatus);
                     riderNumber.setText(riderStatus);
+                    riderRating.setText(riderStatus);
                     riderId = null;
                 }
             }

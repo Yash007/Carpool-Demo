@@ -52,7 +52,6 @@
                 android:layout_weight="10"
                 android:hint="@string/riderEmail"
                 android:maxLength="50"
-                android:text="james@gmail.com"
                 />
 
         </TableRow>
@@ -78,7 +77,6 @@
                 android:layout_weight="10"
                 android:hint="@string/password"
                 android:maxLength="50"
-                android:text="yash007"
                 />
 
         </TableRow>

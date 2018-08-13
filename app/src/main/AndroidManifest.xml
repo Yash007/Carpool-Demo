@@ -74,7 +74,10 @@
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".RiderTripDetailsActivity" />
         <activity android:name=".DriverRequestDetailsActivity" />
-        <activity android:name=".AdminLoginActivity" />
+        <activity android:name=".AdminLoginActivity"
+            android:label="@string/adminLogin"
+            android:parentActivityName=".MainActivity"
+            />
         <activity android:name=".AdminHomeActivity" />
         <activity android:name=".RiderAddSupportActivity" />
         <activity android:name=".DriverAddSupportActivity" />

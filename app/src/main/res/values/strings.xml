@@ -69,6 +69,8 @@
     <string name="complete">Complete</string>
     <string name="completed">Completed</string>
     <string name="rating">Rating</string>
+    <string name="star">Star</string>
+    <string name="adminLogin">Admin Login</string>
     <string-array name="ratings">
         <item name="one">1</item>
         <item name="two">2</item>
