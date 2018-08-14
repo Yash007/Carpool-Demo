@@ -71,6 +71,7 @@
     <string name="rating">Rating</string>
     <string name="star">Star</string>
     <string name="adminLogin">Admin Login</string>
+    <string name="delete">Remove</string>
     <string-array name="ratings">
         <item name="one">1</item>
         <item name="two">2</item>

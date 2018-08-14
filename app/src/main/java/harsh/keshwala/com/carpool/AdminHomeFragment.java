@@ -9,7 +9,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -70,14 +73,31 @@ public class AdminHomeFragment extends android.support.v4.app.Fragment {
 
         loadDrivers();
         registerForContextMenu(lv);
+    }
 
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                TextView id = (TextView) view.findViewById(R.id.uId);
-                //new DeleteDriver(id.getText().toString()).execute();
-            }
-        });
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        if (v.getId() == R.id.driverList)   {
+
+            MenuInflater inflater = context.getMenuInflater();
+            inflater.inflate(R.menu.admin_option_menu, menu);
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+
+        switch (item.getItemId())   {
+            case R.id.deleteUser:
+                TextView id = info.targetView.findViewById(R.id.uId);
+                new DeleteDriver(id.getText().toString()).execute();
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
     }
 
     public void loadDrivers()   {
